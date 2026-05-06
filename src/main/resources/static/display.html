@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartQueue | Customer Display</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background: var(--clr-navy); color: #fff; display: flex; flex-direction: column; height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--clr-purple); padding-bottom: 20px; margin-bottom: 20px; }
+        .header h1 { margin: 0; font-size: 2.5rem; }
+        .time { font-size: 2rem; color: var(--clr-lavender); }
+        .main-display { display: flex; gap: 40px; flex: 1; }
+        .now-serving-col { flex: 2; display: flex; flex-direction: column; gap: 20px; }
+        .waiting-col { flex: 1; background: rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; }
+        .counter-card { background: var(--clr-card-bg); color: var(--txt-dark); padding: 30px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .c-num { font-size: 2rem; color: var(--txt-muted); font-weight: bold; }
+        .c-ticket { font-size: 5rem; font-weight: bold; color: var(--clr-navy); }
+        .waiting-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; }
+        .waiting-item { display: flex; justify-content: space-between; font-size: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; }
+        .w-ticket { font-weight: bold; }
+        .w-cat { color: var(--clr-lavender); font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>SmartQueue Display Board</h1>
+        <div class="time" id="clock">00:00:00</div>
+    </div>
+    <div class="main-display">
+        <div class="now-serving-col" id="counters-container">
+            <!-- Injected dynamically -->
+        </div>
+        <div class="waiting-col">
+            <h2 style="margin-top:0; border-bottom:2px solid rgba(255,255,255,0.2); padding-bottom:10px; margin-bottom:20px;">Please Wait</h2>
+            <ul class="waiting-list" id="waiting-list">
+                <!-- Injected dynamically -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/display.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartQueue | Intelligent Queue Management Simulation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>SmartQueue Dashboard</span>
+            </div>
+            <div class="header-actions">
+                <a href="display.html" target="_blank" class="btn btn-secondary">Open Customer Display Board</a>
+                <div class="demo-badge">Programming in Java Final Project</div>
+            </div>
+        </header>
+
+        <div class="row-layout">
+            <section class="card flow-card">
+                <!-- STEP 1 -->
+                <div class="card-head">
+                    <span class="step-badge">1</span> Generate New Ticket
+                </div>
+                <div class="service-type-grid" style="margin-top: 1rem;">
+                    <label class="radio-card">
+                        <input type="radio" name="serviceType" value="Bank Service" checked onchange="updatePreview()">
+                        <span class="radio-content">Bank</span>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="serviceType" value="Hospital Service" onchange="updatePreview()">
+                        <span class="radio-content">Hospital</span>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="serviceType" value="Government Office" onchange="updatePreview()">
+                        <span class="radio-content">Government</span>
+                    </label>
+                </div>
+                
+                <div class="actions-grid category-selection" style="margin-top: 1rem;">
+                    <label class="cat-radio-lbl">
+                        <input type="radio" name="customerCategory" value="REGULAR" checked onchange="updatePreview()">
+                        <div class="btn btn-regular cat-box">Regular</div>
+                    </label>
+                    <label class="cat-radio-lbl">
+                        <input type="radio" name="customerCategory" value="ELDERLY" onchange="updatePreview()">
+                        <div class="btn btn-elderly cat-box">Elderly/Disabled</div>
+                    </label>
+                    <label class="cat-radio-lbl">
+                        <input type="radio" name="customerCategory" value="EMERGENCY" onchange="updatePreview()">
+                        <div class="btn btn-emergency cat-box">Emergency</div>
+                    </label>
+                </div>
+
+                <div class="generate-preview-box">
+                    <button class="btn btn-submit-ticket" onclick="issueTicket()">Generate Ticket</button>
+                </div>
+            </section>
+
+            <!-- STATS PANEL -->
+            <section class="card stats-card">
+                <div class="card-head">Real-Time Statistics</div>
+                <div class="stats-data">
+                    <div class="stat-item">
+                        <div class="stat-lbl">Tickets Issued</div>
+                        <div class="stat-val" id="stat-issued">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-lbl">Waiting</div>
+                        <div class="stat-val" id="stat-waiting">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-lbl">Served</div>
+                        <div class="stat-val" id="stat-served">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-lbl">Cancelled</div>
+                        <div class="stat-val" id="stat-cancelled">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-lbl">No Show</div>
+                        <div class="stat-val" id="stat-noshow">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-lbl">Avg. Actual Wait</div>
+                        <div class="stat-val"><span id="stat-avg-act">0</span>s</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-lbl">Avg. Service Dur.</div>
+                        <div class="stat-val"><span id="stat-avg-dur">0</span>s</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="middle-layout">
+            <!-- STEP 4: WAITING QUEUE -->
+            <section class="card queue-card">
+                <div class="card-head">
+                    Waiting Queue
+                </div>
+                <div class="queue-container">
+                    <ul class="queue-list" id="queue-list">
+                        <!-- Items injected dynamically -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- STEP 5: SERVICE COUNTERS -->
+            <section class="card counters-card">
+                <div class="card-head" style="display: flex; justify-content: space-between;">
+                    <span>Service Counters</span>
+                    <div class="demo-controls" style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-primary" onclick="serveNext()">Serve Next Ticket</button>
+                        <button class="btn btn-secondary" onclick="demoControl('start')">Auto Demo Mode</button>
+                        <button class="btn btn-secondary" onclick="demoControl('pause')">Pause</button>
+                        <button class="btn btn-danger" onclick="demoControl('reset')">Reset</button>
+                    </div>
+                </div>
+                
+                <div class="counters-grid" style="margin-top: 1rem;">
+                    <!-- Counter 1 -->
+                    <div class="counter-box" id="counter-1">
+                        <div class="counter-name">Counter 1</div>
+                        <div class="counter-display" id="c1-display">IDLE</div>
+                        <div class="counter-state state-idle" id="c1-state">Available</div>
+                        <div class="counter-timer" id="c1-timer">00:00</div>
+                        <div class="counter-actions" id="c1-actions" style="display:none;">
+                            <button class="btn btn-success btn-sm" onclick="completeTicket(1)">Complete</button>
+                            <button class="btn btn-warning btn-sm" onclick="markNoShow(1)">No-Show</button>
+                        </div>
+                    </div>
+                    <!-- Counter 2 -->
+                    <div class="counter-box" id="counter-2">
+                        <div class="counter-name">Counter 2</div>
+                        <div class="counter-display" id="c2-display">IDLE</div>
+                        <div class="counter-state state-idle" id="c2-state">Available</div>
+                        <div class="counter-timer" id="c2-timer">00:00</div>
+                        <div class="counter-actions" id="c2-actions" style="display:none;">
+                            <button class="btn btn-success btn-sm" onclick="completeTicket(2)">Complete</button>
+                            <button class="btn btn-warning btn-sm" onclick="markNoShow(2)">No-Show</button>
+                        </div>
+                    </div>
+                    <!-- Counter 3 -->
+                    <div class="counter-box" id="counter-3">
+                        <div class="counter-name">Counter 3</div>
+                        <div class="counter-display" id="c3-display">IDLE</div>
+                        <div class="counter-state state-idle" id="c3-state">Available</div>
+                        <div class="counter-timer" id="c3-timer">00:00</div>
+                        <div class="counter-actions" id="c3-actions" style="display:none;">
+                            <button class="btn btn-success btn-sm" onclick="completeTicket(3)">Complete</button>
+                            <button class="btn btn-warning btn-sm" onclick="markNoShow(3)">No-Show</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="row-layout">
+            <section class="card chart-card" style="flex: 1;">
+                <div class="card-head">Tickets by Priority</div>
+                <div style="position: relative; height:200px;">
+                    <canvas id="priorityChart"></canvas>
+                </div>
+            </section>
+            <section class="card chart-card" style="flex: 1;">
+                <div class="card-head">Tickets by Status</div>
+                <div style="position: relative; height:200px;">
+                    <canvas id="statusChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        <!-- STEP 6: HISTORY -->
+        <section class="card history-card">
+            <div class="card-head" style="display: flex; justify-content: space-between;">
+                <span>Ticket History</span>
+                <button class="btn btn-primary" onclick="exportCSV()">Export Report (CSV)</button>
+            </div>
+            <div class="history-filters" style="display:flex; gap:1rem; margin:1rem 0;">
+                <input type="text" id="filter-search" placeholder="Search Ticket #..." onkeyup="renderHistory()">
+                <select id="filter-priority" onchange="renderHistory()">
+                    <option value="ALL">All Priorities</option>
+                    <option value="EMERGENCY">Emergency</option>
+                    <option value="ELDERLY">Elderly</option>
+                    <option value="REGULAR">Regular</option>
+                </select>
+                <select id="filter-status" onchange="renderHistory()">
+                    <option value="ALL">All Statuses</option>
+                    <option value="SERVED">Served</option>
+                    <option value="NO_SHOW">No Show</option>
+                    <option value="CANCELLED">Cancelled</option>
+                </select>
+            </div>
+            <div class="table-responsive">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket #</th>
+                            <th>Priority</th>
+                            <th>Service Type</th>
+                            <th>Status</th>
+                            <th>Counter</th>
+                            <th>Wait (s)</th>
+                            <th>Duration (s)</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-tbody">
+                        <!-- History injected dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            SmartQueue Management System | Distinction-Level Final Project
+        </footer>
+    </div>
+
+    <!-- TICKET MODAL -->
+    <div id="ticket-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-head">Ticket Generated!</div>
+            <div class="ticket-slip">
+                <div class="t-service" id="modal-service">Bank Service</div>
+                <div class="t-number" id="modal-num">B-R-001</div>
+                <div class="t-priority" id="modal-priority">Regular</div>
+                <div class="t-wait">Estimated Wait: <span id="modal-est">~2 mins</span></div>
+                <div class="t-pos">Queue Position: <span id="modal-pos">2</span></div>
+            </div>
+            <button class="btn btn-regular" style="width: 100%;" onclick="closeModal()">Place into Waiting Queue</button>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

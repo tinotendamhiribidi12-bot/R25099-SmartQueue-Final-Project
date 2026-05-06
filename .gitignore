@@ -1,0 +1,14 @@
+# Build output
+target/
+*.class
+
+# IntelliJ IDEA personal files
+.idea/
+*.iml
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
