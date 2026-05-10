@@ -1,7 +1,6 @@
 # SmartQueue Management System
 
 **Tinotenda Mhiribidi | Java 2026 Final Project**
-*Distinction-Level Final Project*
 
 ## Overview
 SmartQueue is a professional-grade, intelligent queue management web application designed to streamline customer service flows across various industries (Banking, Healthcare, Government). Built using Java Spring Boot and a robust backend architecture, the system accurately handles priority-based queues, calculates dynamic wait times, and persists real-time data using an SQLite database. 
