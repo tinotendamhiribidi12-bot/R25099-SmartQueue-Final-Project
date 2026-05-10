@@ -1,54 +1,43 @@
 # SmartQueue Management System
 
-SmartQueue is a Java Spring Boot final project that manages customer queues using priority levels, service counters, and a web-based interface.
+**Tinotenda Mhiribidi | Java 2026 Final Project**
+*Distinction-Level Final Project*
 
-## Project Features
+## Overview
+SmartQueue is a professional-grade, intelligent queue management web application designed to streamline customer service flows across various industries (Banking, Healthcare, Government). Built using Java Spring Boot and a robust backend architecture, the system accurately handles priority-based queues, calculates dynamic wait times, and persists real-time data using an SQLite database. 
 
-- Add customers to a smart queue
-- Assign priority based on customer/emergency category
-- Serve customers through counters
-- Display queue and service status in the browser
-- Store queue records using SQLite
-- Includes frontend files built with HTML, CSS, and JavaScript
+It features a "girly but professional" aesthetic with purple, navy, and lavender themes, and comes with a functional Demo Mode to easily showcase the project's capabilities.
+
+## Key Features
+*   **Priority Queueing Logic:** Utilizes custom Java `PriorityQueue` implementations to accurately sort customers based on urgency (Emergency, Elderly/Disabled, Regular).
+*   **Service Counters:** Three distinct service counters with manual ticket completion, "no-show" controls, and multithreaded background processing.
+*   **Demo Mode:** An automated mode that automatically processes tickets to demonstrate the application's flow and multithreading capabilities.
+*   **Analytics Dashboard:** Real-time visual data reporting utilizing Chart.js, featuring statistics on issued/served tickets, average wait times, and ticket statuses.
+*   **Customer Display Board:** A dedicated view for waiting customers to track queue positions and see when they are called to a counter.
+*   **Persistent Data Storage:** Uses JDBC/SQLite to store historical ticket information, allowing for comprehensive reporting and CSV exports.
 
 ## Technologies Used
+*   **Backend:** Java 17+, Spring Boot, JDBC
+*   **Database:** SQLite
+*   **Frontend:** HTML5, CSS3 (Vanilla), JavaScript, Chart.js
 
-- Java 17
-- Spring Boot 3.2.4
-- Maven
-- SQLite JDBC
-- HTML, CSS, JavaScript
+## How to Run the Application
+1. Ensure you have Java 17+ and Maven installed.
+2. Open the project in your preferred IDE (IntelliJ IDEA, Eclipse, etc.) or open a terminal in the project root.
+3. Run the Spring Boot application using Maven:
+   ```bash
+   mvn spring-boot:run
+   ```
+4. Open your web browser and navigate to:
+   * **Main Dashboard:** `http://localhost:8080/`
+   * **Customer Display Board:** `http://localhost:8080/display.html`
 
-## Main Files to Review
+## Usage Instructions
+*   **Generate Ticket:** Select a Service Type (Bank, Hospital, etc.) and a Category (Regular, Elderly, Emergency) to issue a new ticket.
+*   **Service Counters:** Use the "Serve Next Ticket" button to manually pull the highest priority waiting customer to an available counter. Alternatively, use "Auto Demo Mode" to simulate real traffic.
+*   **History & Exports:** View all generated tickets in the History table at the bottom of the page. You can filter by priority/status and export the data to a CSV file.
 
-- `src/main/java/com/queue/SmartQueueApplication.java` - starts the Spring Boot application
-- `src/main/java/com/queue/controller/QueueController.java` - handles web/API requests
-- `src/main/java/com/queue/service/QueueService.java` - manages queue logic and priority ordering
-- `src/main/java/com/queue/service/CounterService.java` - simulates service counters
-- `src/main/java/com/queue/db/DatabaseHandler.java` - connects the system to SQLite
-- `src/main/java/com/queue/model/Customer.java` - represents a customer/ticket in the queue
-- `src/main/resources/static/index.html` - main user interface
-- `src/main/resources/static/display.html` - display screen
-- `src/main/resources/static/js/app.js` - frontend behavior
-- `src/main/resources/static/css/style.css` - styling/design
-
-## How to Run the Project
-
-1. Open the project in IntelliJ IDEA.
-2. Make sure Java 17 is installed and selected.
-3. Wait for Maven to load the dependencies from `pom.xml`.
-4. Run `SmartQueueApplication.java`.
-5. Open a browser and go to:
-
-```text
-http://localhost:8080
-```
-
-## Database
-
-The project uses an SQLite database file named `queue_data.db`.
-
-## Student Details
-
-Student Number: R25099
-Project: SmartQueue Final Project
+## Developer
+*   **Name:** Tinotenda Mhiribidi
+*   **Course:** Programming in Java
+*   **Year:** 2026
